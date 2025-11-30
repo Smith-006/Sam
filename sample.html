@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>A Birthday Surprise for Sam</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --royal: #0A3D62;
+    --indigo: #192A56;
+    --sky: #4A90E2;
+    --gold: #F5C469;
+    --white: #FFFFFF;
+    --bg: #EAF4FF;
+    --glass-alpha: rgba(255,255,255,0.06);
+    --card-radius: 20px;
+    --shadow: 0 10px 30px rgba(10,20,40,0.25);
+    --focus: 0 0 0 4px rgba(74,144,226,0.18);
+    --transition: 260ms cubic-bezier(.2,.9,.3,1);
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(74,144,226,0.10), transparent),
+                radial-gradient(1000px 400px at 90% 90%, rgba(25,42,86,0.12), transparent),
+                linear-gradient(180deg,var(--bg), #F5FAFF 60%);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:36px;
+  }
+
+  /* Container */
+  .hero-wrap{
+    width:100%;
+    max-width:960px;
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:28px;
+    align-items:center;
+  }
+
+  /* Left area: decorative/empty for desktop - turns into stack on mobile */
+  .hero-left{
+    min-height:360px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--indigo);
+    font-size:14px;
+  }
+
+  /* Card */
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: var(--card-radius);
+    padding:34px;
+    box-shadow: var(--shadow);
+    position:relative;
+    overflow:visible;
+    backdrop-filter: blur(6px) saturate(120%);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .card-inner{
+    background: linear-gradient(135deg, rgba(10,61,98,0.95), rgba(25,42,86,0.92));
+    border-radius: calc(var(--card-radius) - 6px);
+    padding:28px;
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* Title */
+  h1{
+    margin:0 0 8px 0;
+    font-family: "Playfair Display", serif;
+    font-weight:700;
+    font-size:28px;
+    line-height:1.05;
+    text-shadow: 0 6px 18px rgba(10,20,40,0.35);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .subtitle{
+    margin:0 0 18px 0;
+    color: rgba(255,255,255,0.92);
+    font-size:15px;
+  }
+
+  /* input area */
+  .input-row{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:18px;
+  }
+
+  .name-input{
+    flex:1;
+    min-width:0;
+    padding:14px 16px;
+    border-radius:12px;
+    border: none;
+    font-size:15px;
+    background: rgba(255,255,255,0.08);
+    color:var(--white);
+    outline:none;
+    transition: box-shadow var(--transition), transform var(--transition);
+    box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2);
+  }
+  .name-input::placeholder{color: rgba(255,255,255,0.6);}
+
+  .name-input:focus{
+    box-shadow: var(--focus);
+    transform: translateY(-2px);
+  }
+
+  /* Button */
+  .btn{
+    padding:12px 18px;
+    border-radius:12px;
+    border: 2px solid var(--gold);
+    background: linear-gradient(180deg, rgba(245,196,105,0.95), rgba(255,230,170,0.95));
+    color: var(--indigo);
+    font-weight:600;
+    cursor:pointer;
+    font-size:15px;
+    transition: transform var(--transition), box-shadow var(--transition);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    white-space:nowrap;
+  }
+  .btn:focus{ box-shadow: var(--focus); outline:none; }
+  .btn:hover{ transform: translateY(-3px); box-shadow: 0 10px 30px rgba(74,144,226,0.12); }
+
+  /* small helper */
+  .hint{
+    font-size:13px;
+    opacity:0.9;
+    margin-top:8px;
+    color: rgba(255,255,255,0.84);
+  }
+
+  /* celebration area (hidden until unlock) */
+  .surprise{
+    margin-top:18px;
+    padding:18px;
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.04);
+    display:none;
+    align-items:center;
+    gap:14px;
+    justify-content:center;
+    flex-direction:column;
+  }
+
+  .surprise.show{
+    display:flex;
+    animation: pop 420ms cubic-bezier(.2,.9,.3,1);
+  }
+  @keyframes pop{
+    0%{ transform: scale(.96) rotateX(12deg); opacity:0; }
+    100%{ transform: scale(1) rotateX(0); opacity:1; }
+  }
+
+  .surprise h2{
+    margin:0;
+    font-family:"Playfair Display", serif;
+    font-size:22px;
+    color:var(--gold);
+    text-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+  .surprise p{ margin:0; color:rgba(255,255,255,0.95); text-align:center; }
+
+  /* decorative confetti */
+  .confetti{
+    position:absolute;
+    left:0; right:0; top:0; bottom:0;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .confetti .dot{
+    position:absolute;
+    width:10px; height:14px; border-radius:3px;
+    opacity:0; transform: translateY(-10px);
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .hero-wrap{ grid-template-columns: 1fr; max-width:560px; gap:18px; }
+    .hero-left{ order:2; min-height:120px; }
+    .card{ order:1; }
+  }
+
+  /* small footer */
+  .small{
+    margin-top:12px;
+    font-size:12px;
+    color: rgba(255,255,255,0.75);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-wrap" role="main">
+  <div class="hero-left" aria-hidden="true">
+    <!-- Decorative area: maybe a party illustration or big cake graphic could go here -->
+    <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="110" cy="110" r="110" fill="url(#g1)"/>
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#4A90E2"/>
+          <stop offset="1" stop-color="#192A56"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="card" aria-live="polite">
+    <div class="card-inner" role="region" aria-labelledby="hero-title">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2v6" stroke="#F5C469" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 10h12" stroke="#F5C469" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 20h16a1 1 0 0 0 1-1v-6a5 5 0 0 0-5-5H8A5 5 0 0 0 3 13v6a1 1 0 0 0 1 1z" stroke="#F5C469" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+        <h1 id="hero-title">A Birthday Surprise Just for You, Sam! <span aria-hidden="true">🎉</span></h1>
+      </div>
+
+      <p class="subtitle">Hey Sam — type your name below to unlock your surprise 🎁</p>
+
+      <div class="input-row">
+        <input type="text" id="name" class="name-input" placeholder="Enter your name…" aria-label="Enter your name" value="Sam">
+        <button id="unlock" class="btn" aria-controls="surprise" aria-expanded="false">Unlock My Surprise 💙</button>
+      </div>
+
+      <div class="hint">Tip: Press Enter or click the button to reveal the surprise.</div>
+
+      <div id="surprise" class="surprise" role="status" aria-live="polite">
+        <h2>Happy Birthday, Sam! 🎂</h2>
+        <p>Wishing you the best day — may your year be filled with music, joy, and success. Open the gift below!</p>
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <button class="btn" id="revealMore" style="background:linear-gradient(180deg,#4A90E2,#18315A); color:white; border: none;">Open Gift</button>
+        </div>
+      </div>
+
+      <!-- decorative confetti container -->
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+      <div class="small">Made with ❤️ — Customize text, colors or replace the background image</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Basic logic + confetti effect
+  const unlockBtn = document.getElementById('unlock');
+  const nameInput = document.getElementById('name');
+  const surprise = document.getElementById('surprise');
+  const confettiRoot = document.getElementById('confetti');
+
+  function simpleConfetti(xCount=18){
+    confettiRoot.innerHTML = '';
+    const colors = ['#F5C469','#4A90E2','#B39DDB','#FFFFFF','#66FCF1'];
+    for(let i=0;i<xCount;i++){
+      const el = document.createElement('div');
+      el.className = 'dot';
+      const w = 8 + Math.round(Math.random()*12);
+      el.style.width = w + 'px';
+      el.style.height = (w+2) + 'px';
+      el.style.background = colors[Math.floor(Math.random()*colors.length)];
+      el.style.left = (10 + Math.random()*80) + '%';
+      el.style.top = (5 + Math.random()*60) + '%';
+      el.style.transform = 'translateY(-40px) rotate(' + (Math.random()*360|0) + 'deg)';
+      el.style.opacity = 0;
+      el.style.transition = 'transform 900ms cubic-bezier(.2,.9,.3,1),' +
+                             'opacity 700ms linear,' +
+                             'left 900ms linear';
+      confettiRoot.appendChild(el);
+
+      // animate with slight delay
+      (function(node, idx){
+        setTimeout(()=>{
+          node.style.opacity = 1;
+          node.style.transform = 'translateY(' + (230 + Math.random()*160) +'px) rotate(' + (Math.random()*720|0) + 'deg)';
+          node.style.left = (5 + Math.random()*90) + '%';
+        }, 20 + idx*20 + Math.random()*120);
+        // fade out after
+        setTimeout(()=>{ node.style.opacity = 0; }, 1300 + Math.random()*400);
+      })(el, i);
+    }
+  }
+
+  function showSurprise(){
+    const name = (nameInput.value || 'Sam').trim();
+    // update title and personalized header
+    const title = document.getElementById('hero-title');
+    title.innerHTML = `A Birthday Surprise Just for You, ${escapeHtml(name)}! 🎉`;
+
+    surprise.classList.add('show');
+    unlockBtn.setAttribute('aria-expanded','true');
+    simpleConfetti(22);
+  }
+
+  // escape helpers
+  function escapeHtml(text){
+    return text.replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+  }
+
+  unlockBtn.addEventListener('click', ()=>{
+    showSurprise();
+  });
+
+  nameInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ showSurprise(); }
+  });
+
+  // optional "Open Gift" interactivity
+  document.getElementById('revealMore').addEventListener('click', function(){
+    alert('🎁 Surprise opened! Add your surprise message, link, or media here (video/photo).');
+  });
+
+  // small accessibility: focus input on load
+  window.addEventListener('load', ()=>{ nameInput.focus(); });
+</script>
+
+</body>
+</html>
