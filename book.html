@@ -4,20 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A Book For Your Birthday ❤️</title>
-<!-- Favicon for browser tab -->
-<link rel="icon" type="image/x-icon" href="sam.jpeg">
-<link rel="icon" type="image/png" sizes="16x16" href="sam.jpeg">
-<link rel="icon" type="image/png" sizes="32x32" href="sam.jpeg">
-
-<!-- Android Chrome icons -->
-<link rel="icon" type="image/png" sizes="192x192" href="sam.jpeg">
-<link rel="icon" type="image/png" sizes="512x512" href="sam.jpeg">
-
-<!-- Apple Touch Icon (iPhone/iPad homescreen) -->
-<link rel="apple-touch-icon" href="sam.jpeg">
-
-<!-- Web App Manifest -->
-<link rel="manifest" href="site.webmanifest">
+    <!-- Favicon for browser tab -->
+    <link rel="icon" type="image/x-icon" href="sam.jpeg">
+    <link rel="icon" type="image/png" sizes="16x16" href="sam.jpeg">
+    <link rel="icon" type="image/png" sizes="32x32" href="sam.jpeg">
+    <link rel="icon" type="image/png" sizes="192x192" href="sam.jpeg">
+    <link rel="icon" type="image/png" sizes="512x512" href="sam.jpeg">
+    <link rel="apple-touch-icon" href="sam.jpeg">
+    <link rel="manifest" href="site.webmanifest">
 
     <link href="https://fonts.googleapis.com/css2?family=Zeyada&family=Sriracha&family=Titan+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -41,19 +35,23 @@
         display: flex;
         min-height: 100vh;
         perspective: 2200px;
-        font: 1em/1.4 var(--font-body);
+        font: 1em/1.4 var(--font-heading);
         overflow: hidden;
         color: var(--color-black);
         background-color: var(--color-pink-bg);
-        background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 0.8) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.8) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 0.8) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.8) 76%, transparent 77%, transparent);
+        background-image:
+          linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 0.8) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.8) 76%, transparent 77%, transparent),
+          linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 0.8) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.8) 76%, transparent 77%, transparent);
         background-size: 80px 80px;
+        justify-content: center;
+        align-items: center;
       }
 
       .book {
         position: relative;
         margin: auto;
         width: 45vmin;
-        height: 60vmin;
+        height: 65vmin;
         transform-style: preserve-3d;
         transform: rotateX(10deg);
         transition: transform 1s ease-in-out;
@@ -97,9 +95,9 @@
         font-family: var(--font-heading);
         color: #EAF4FF;
       }
+      .cover::after, .back-cover::after { content: ""; }
       .front::after { right: 1em; }
       .back::after { left: 1em; }
-      .cover::after, .back-cover::after { content: ""; }
       
       .front:has(img), .back:has(img) { padding: 0; }
       .front img, .back img { width: 100%; height: 100%; object-fit: cover; }
@@ -158,7 +156,7 @@
       .btn {
         display: inline-block;
         margin-top: 15px;
-        padding: 10px 25px;
+        padding: 40px 25px;
         border: 2px solid #EAF4FF;
         border-radius: 25px;
         background: #192A56;
@@ -174,131 +172,215 @@
         color: #192A56;
         box-shadow: 0 0 25px rgba(255,77,109,1);
       }
+
+      /* ===== MOBILE FIX ===== */
+      @media (max-width: 768px) {
+        body {
+          overflow-y: auto;
+          padding: 1.5rem 0;
+          perspective: 1400px;
+        }
+
+        .book {
+          width: 45vw;
+          height: 65vw;
+          transform: rotateX(0deg); /* keep flat for better readability */
+        }
+
+        .page {
+          border-radius: 14px;
+          box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+        }
+
+        .front, .back {
+          padding: 1.4rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        p {
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .book {
+          width: 45vw;
+          height: 65vw;
+        }
+
+        .front, .back {
+          padding: 1.1rem;
+        }
+
+        h2 {
+          font-size: 1.15rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
  
+      @media (max-width: 600px) {
+  body {
+    overflow-y: auto;
+    padding: 10px 0;
+    justify-content: space-around;
+    align-items:center;
+    display:flex;
+  }
+
+  .book {
+    width: 45vw;
+    height: 65vw;
+    transform: rotateX(0deg); /* just in case */
+  }
+
+  .front,
+  .back {
+    padding: 1.2rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+
     </style>
   </head>
 
   <audio id="bg-music" autoplay loop>
-  <source src="Sai Pallavis Intro (From _Amaran_).mp3" type="audio/mpeg">
-</audio>
+    <source src="Sai Pallavis Intro (From _Amaran_).mp3" type="audio/mpeg">
+  </audio>
 
-<script>
-  const music = document.getElementById("bg-music");
-
-  // Resume from last saved time
-  const savedTime = localStorage.getItem("musicTime");
-  if (savedTime) {
-    music.currentTime = savedTime;
-    music.play();
-  }
-</script>
-
+  <script>
+    const music = document.getElementById("bg-music");
+    const savedTime = localStorage.getItem("musicTime");
+    if (savedTime) {
+      music.currentTime = savedTime;
+      music.play();
+    }
+  </script>
 
   <body>
- <!-- Floating hearts animation -->
-<div class="floating-hearts"></div>
+    <div class="floating-hearts"></div>
 
-<!-- Main Book Container -->
-<div class="book">
+    <div class="book">
 
-   <!-- Page 0: Cover Page -->
-<div class="page" data-page-num="0">
-    <div class="front cover">
-        <h1>Happy Birthday!</h1>
-        <p>A Special Book Just for You ❤️</p>
-    </div>
-    <div class="back">
-        <h2>A Wish For You... ✨</h2>
-        <p>On your special day, I wish you a life full of happiness and all your beautiful dreams coming true.</p>
-    </div>
-</div>
+      <!-- Page 0: Cover Page -->
+      <div class="page" data-page-num="0">
+        <div class="front cover">
+          <h1>Happy Birthday!</h1>
+          <p>A Special Book Just for You ❤️</p>
+        </div>
+        <div class="back">
+          <h2>A Wish For You... ✨</h2>
+          <p>On your special day, I wish you a life full of happiness and all your beautiful dreams coming true.</p>
+        </div>
+      </div>
 
-<!-- Page 1: Warm Start -->
-<div class="page" data-page-num="1">
-    <div class="front">
-       <img src="3.jpeg" alt="">
-    </div>
-    <div class="back">
-        <h2>For the Birthday Girl 💖</h2>
-        <p>May your birthday be as sweet and beautiful as you are.  
-        Always remember how special you truly are.</p>
-    </div>
-</div>
+      <!-- Page 1 -->
+      <div class="page" data-page-num="1">
+        <div class="front">
+          <img src="3.jpeg" alt="">
+        </div>
+        <div class="back">
+          <h2>For the Birthday Girl 💖</h2>
+          <p>May your birthday be as sweet and beautiful as you are.  
+          Always remember how special you truly are.</p>
+        </div>
+      </div>
 
-<!-- Page 2: Calm Compliment -->
-<div class="page" data-page-num="2">
-    <div class="front">
-       <img src="1.jpeg" alt="">
-    </div>
-    <div class="back">
-        <h2>You’re the Best 🥺</h2>
-        <p>So calm, so real, and always kind.  
-        Never ever change — you’re amazing as you are.</p>
-    </div>
-</div>
+      <!-- Page 2 -->
+      <div class="page" data-page-num="2">
+        <div class="front">
+          <img src="1.jpeg" alt="">
+        </div>
+        <div class="back">
+          <h2>You’re the Best 🥺</h2>
+          <p>So calm, so real, and always kind.  
+          Never ever change — you’re amazing as you are.</p>
+        </div>
+      </div>
 
-<!-- Page 3: Special Feel -->
-<div class="page" data-page-num="3">
-    <div class="front">
-       <img src="sam.jpeg">
-    </div>
-    <div class="back">
-        <h2>You’re Truly Special ✨</h2>
-        <p>Not everyone has such a good heart.  
-        It’s honestly a blessing to know someone like you.  
-        Have a great birthday</p>
-    </div>
-</div>
+      <!-- Page 3 -->
+      <div class="page" data-page-num="3">
+        <div class="front">
+          <img src="sam.jpeg">
+        </div>
+        <div class="back">
+          <h2>You’re Truly Special ✨</h2>
+          <p>Not everyone has such a good heart.  
+          It’s honestly a blessing to know someone like you.  
+          Have a great birthday</p>
+        </div>
+      </div>
 
-<!-- Page 4: Wishes for the Future -->
-<div class="page" data-page-num="4">
-    <div class="front">
-       <img src="5.jpeg" alt="">
-    </div>
-    <div class="back">
-        <h2>My Wish for You 💖</h2>
-        <p>Hope yu will be stay Foreverwith me and keep growing with all the love you truly deserve!</p>
-    </div>
-</div>
+      <!-- Page 4 -->
+      <div class="page" data-page-num="4">
+        <div class="front">
+          <img src="5.jpeg" alt="">
+        </div>
+        <div class="back">
+          <h2>My Wish for You 💖</h2>
+          <p>Hope yu will be stay Foreverwith me and keep growing with all the love you truly deserve!</p>
+        </div>
+      </div>
 
-<!-- Page 5: Emotional Note -->
-<div class="page" data-page-num="5">
-    <div class="front">
-       <img src="100.jpeg" alt="">
-    </div>
-    <div class="back">
-        <h2>Before You Go... 💫</h2>
-        <p>I really wish this year brings you the same joy  
-        you give to everyone around you.  
-        You deserve it, truly.</p>
-    </div>
-</div>
+      <!-- Page 5 -->
+      <div class="page" data-page-num="5">
+        <div class="front">
+          <img src="100.jpeg" alt="">
+        </div>
+        <div class="back">
+          <h2>Before You Go... 💫</h2>
+          <p>I really wish this year brings you the same joy  
+          you give to everyone around you.  
+          You deserve it, truly.</p>
+        </div>
+      </div>
+
+      <!-- Page 6 -->
+      <div class="page" data-page-num="6">
+        <div class="front">
+          <img src="4.jpeg" alt="">
+        </div>
+        <div class="back">
+          <h2>Smiling Queen :)</h2>
+          <p>Your smile really brings happiness for your surrounded peoples.</p>
+        </div>
+      </div>
+
+      <!-- Page 7 -->
+      <div class="page" data-page-num="7">
+        <div class="front">
+          <img src="10.jpeg" alt="">
+        </div>
+        <div class="back back-cover cover">
+          <h1>With Friendship</h1>
+          <p>Always and Forever 💌</p>
+        </div>
+      </div>
+
+       <!-- Page 8 -->
+      <div class="page" data-page-num="8">
+        <div class="front">
+           <a href="surprise.html" class="btn">Click here to Watch Surprise Video 🎥 </a>
+        </div>
+        <div class="back back-cover cover">
+        </div>
+      </div>
 
 
-<!-- Page 7: Heartfelt Goodbye -->
-<div class="page" data-page-num="6">
-    <div class="front">
-       <img src="4.jpeg" alt="">
     </div>
-    <div class="back">
-        <h2>Smiling Queen :)</h2>
-        <p>Your smile really brings happiness for your surrounded peoples.</p>
-    </div>
-</div>
-
-
-<!-- Page 8: Heartfelt Goodbye -->
-<div class="page" data-page-num="7">
-    <div class="front">
-       <img src="10.jpeg" alt="">
-    </div>
-    <div class="back back-cover cover">
-        <h1>With Friendship</h1>
-        <p>Always and Forever 💌</p>
-        <a href="surprise.html" class="btn">🎥 Watch Surprise Video</a>
-    </div>
-</div>
-
 
     <script>
         const book = document.querySelector('.book');
